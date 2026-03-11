@@ -3,184 +3,188 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Esp32 BLE Disruption Module</title>
+  <title>ESP32 Bluetooth Disturbance Tool</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #FF2E93;
-      --secondary: #00F0FF;
-      --dark-bg: #0A0A0B;
-      --panel-bg: #141416;
-      --text-main: #FFFFFF;
-      --text-muted: #8F9098;
+      --bg: #F4F4F0;
+      --text: #111111;
+      --accent: #FFEB3B;
+      --border: 3px solid #111111;
+      --shadow: 6px 6px 0px #111111;
     }
 
     body {
-      font-family: 'Space Grotesk', sans-serif;
-      background-color: var(--dark-bg);
-      color: var(--text-main);
+      font-family: 'Public Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
       margin: 0;
-      padding: 0;
+      padding: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background-image:
-        linear-gradient(rgba(10, 10, 11, 0.9), rgba(10, 10, 11, 0.9)),
-        repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 2px, transparent 8px);
+      box-sizing: border-box;
     }
 
-    .main-wrapper {
+    .main-box {
       width: 100%;
-      max-width: 500px;
-      padding: 2rem;
-    }
-
-    .app-container {
-      background-color: var(--panel-bg);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
+      max-width: 550px;
+      background-color: #FFFFFF;
+      border: var(--border);
+      border-radius: 0;
       padding: 2.5rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .app-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      box-shadow: var(--shadow);
     }
 
     header {
-      text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
+      border-bottom: var(--border);
+      padding-bottom: 1rem;
     }
 
     h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0 0 0.5rem 0;
-      letter-spacing: -0.5px;
+      font-size: 2rem;
+      font-weight: 900;
       text-transform: uppercase;
+      margin: 0;
+      letter-spacing: -1px;
+      line-height: 1.1;
     }
 
     .subtitle {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin: 0;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #444;
     }
 
-    .selection-group {
+    .options-container {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.25rem;
       margin-bottom: 2.5rem;
     }
 
-    .radio-box {
+    .config-option {
       position: relative;
+      cursor: pointer;
       display: block;
+    }
+
+    .config-option input {
+      position: absolute;
+      opacity: 0;
       cursor: pointer;
     }
 
-    .radio-box input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-    }
-
-    .box-content {
-      padding: 1.2rem;
-      border: 2px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.02);
+    .option-panel {
+      padding: 1.25rem;
+      border: var(--border);
+      background: #FFFFFF;
       transition: all 0.2s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    .radio-box:hover .box-content {
-      border-color: rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .radio-box input[type="radio"]:checked+.box-content {
-      border-color: var(--secondary);
-      background: rgba(0, 240, 255, 0.05);
-    }
-
-    .title {
-      font-weight: 700;
-      display: block;
-      margin-bottom: 0.25rem;
-      color: var(--text-main);
-    }
-
-    .desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .flash-action {
       display: flex;
       flex-direction: column;
+    }
+
+    .config-option:hover .option-panel {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0px #111;
+    }
+
+    .config-option input:checked+.option-panel {
+      background-color: var(--accent);
+      transform: translate(-4px, -4px);
+      box-shadow: 6px 6px 0px #111;
+    }
+
+    .opt-title {
+      font-weight: 900;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .opt-desc {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .action-area {
+      display: flex;
+      justify-content: center;
       align-items: center;
+      min-height: 60px;
+    }
+
+    /* CUSTOM BUTTON FOR ESP-WEB-TOOLS */
+    .custom-connect-btn {
+      appearance: none;
+      background-color: #111111;
+      color: #FFFFFF;
+      border: var(--border);
+      padding: 1rem 2.5rem;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    .custom-connect-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
+      background-color: #333333;
+    }
+
+    .custom-connect-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
     }
 
     .invisible {
       display: none !important;
     }
 
-    /* Override the default web-install-button styling if possible */
-    esp-web-install-button {
-      --esp-tools-button-color: var(--text-main);
-      --esp-tools-button-background-color: var(--primary);
-      --esp-tools-button-border-radius: 6px;
-    }
-
-    .help-panel {
-      margin-top: 2.5rem;
+    .troubleshooting-guide {
+      margin-top: 3rem;
       padding: 1.5rem;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 8px;
-      font-size: 0.85rem;
-      border-left: 3px solid var(--text-muted);
+      background: #EEEEEE;
+      border: var(--border);
     }
 
-    .help-panel h3 {
+    .troubleshooting-guide h3 {
       margin: 0 0 1rem 0;
-      font-size: 1rem;
-      color: var(--text-main);
-      font-weight: 500;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 1.1rem;
     }
 
-    .help-panel p {
-      color: var(--text-muted);
+    .troubleshooting-guide ul {
+      padding-left: 1.5rem;
+      margin: 0;
+      font-weight: 500;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .troubleshooting-guide li {
       margin-bottom: 0.5rem;
     }
 
-    .help-panel ul {
-      color: var(--text-muted);
-      padding-left: 1.2rem;
-      margin: 0;
-    }
-
-    .help-panel li {
-      margin-bottom: 0.4rem;
-    }
-
-    .help-panel a {
-      color: var(--secondary);
-      text-decoration: none;
-    }
-
-    .help-panel a:hover {
+    .troubleshooting-guide a {
+      color: #111;
+      font-weight: 900;
       text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+
+    .troubleshooting-guide a:hover {
+      background-color: var(--accent);
     }
   </style>
   <script type="module" src="https://unpkg.com/esp-web-tools@8.0.1/dist/web/install-button.js?module"></script>
@@ -188,56 +192,56 @@
 
 <body>
 
-  <div class="main-wrapper">
-    <div class="app-container">
-      <header>
-        <h1>Module Flasher</h1>
-        <p class="subtitle">Select variant to initialize</p>
-      </header>
+  <div class="main-box">
+    <header>
+      <h1>BT Disturbance Setup</h1>
+      <div class="subtitle">Select your device's wiring scheme.</div>
+    </header>
 
-      <div class="selection-group">
-        <label class="radio-box">
-          <input type="radio" name="boardType" value="Ble1">
-          <div class="box-content">
-            <span class="title">Standard Edition (VSPI)</span>
-            <span class="desc">Requires Single NRF24L01 on SCK:18 MISO:19 MOSI:23 CS:21 CE:22</span>
-          </div>
-        </label>
+    <div class="options-container">
+      <label class="config-option">
+        <input type="radio" name="boardType" value="Ble1">
+        <div class="option-panel">
+          <span class="opt-title">Type A (VSPI Link)</span>
+          <span class="opt-desc">Single NRF24 Module connected via VSPI (Pins 18, 19, 23, 21, 22)</span>
+        </div>
+      </label>
 
-        <label class="radio-box">
-          <input type="radio" name="boardType" value="Ble3">
-          <div class="box-content">
-            <span class="title">Alternative IO (HSPI)</span>
-            <span class="desc">Requires Single NRF24L01 on SCK:14 MISO:12 MOSI:13 CS:15 CE:16</span>
-          </div>
-        </label>
+      <label class="config-option">
+        <input type="radio" name="boardType" value="Ble3">
+        <div class="option-panel">
+          <span class="opt-title">Type B (HSPI Link)</span>
+          <span class="opt-desc">Single NRF24 Module connected via HSPI (Pins 14, 12, 13, 15, 16)</span>
+        </div>
+      </label>
 
-        <label class="radio-box">
-          <input type="radio" name="boardType" value="Ble2">
-          <div class="box-content">
-            <span class="title">Pro Edition (Dual Array)</span>
-            <span class="desc">Utilizes twinned NRF24L01 units on both VSPI and HSPI clusters</span>
-          </div>
-        </label>
-      </div>
+      <label class="config-option">
+        <input type="radio" name="boardType" value="Ble2">
+        <div class="option-panel">
+          <span class="opt-title">Type C (Twin Setup)</span>
+          <span class="opt-desc">Dual NRF24 Modules bridging both VSPI & HSPI networks</span>
+        </div>
+      </label>
+    </div>
 
-      <div class="flash-action">
-        <esp-web-install-button class="invisible" id="installer-btn"></esp-web-install-button>
-      </div>
+    <div class="action-area">
+      <esp-web-install-button class="invisible" id="installer-btn">
+        <button slot="activate" class="custom-connect-btn">Connect & Install</button>
+      </esp-web-install-button>
+    </div>
 
-      <div class="help-panel">
-        <h3>Connection Issues?</h3>
-        <p>If your serial port isn't detected:</p>
-        <ul>
-          <li>Verify USB data cable integrity (not power-only).</li>
-          <li>Ensure module indicators are illuminated.</li>
-          <li>Install bridge drivers if necessary: <br>
-            <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank">CP2102 Driver</a>
-            |
-            <a href="https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers" target="_blank">CH341 Driver</a>
-          </li>
-        </ul>
-      </div>
+    <div class="troubleshooting-guide">
+      <h3>Device Not Showing Up?</h3>
+      <ul>
+        <li>Ensure you are using a data-transfer capable USB cable, not a charge-only one.</li>
+        <li>Make sure the red/blue power indicator on your ESP32 is turned on.</li>
+        <li>You might be missing the required USB-UART bridge drivers: <br><br>
+          <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank">Download CP2102
+            Driver</a> |
+          <a href="https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers" target="_blank">Download CH341
+            Driver</a>
+        </li>
+      </ul>
     </div>
   </div>
 
