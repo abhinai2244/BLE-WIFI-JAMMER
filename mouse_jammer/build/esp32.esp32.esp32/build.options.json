@@ -5,5 +5,5 @@
   "fqbn": "esp32:esp32:esp32",
   "hardwareFolders": "C:\\Users\\abhin\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.7,C:\\Users\\abhin\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.7",
   "otherLibrariesFolders": "C:\\Users\\abhin\\Documents\\Arduino\\libraries",
-  "sketchLocation": "C:\\Users\\abhin\\Videos\\BLE-WIFI-JAMMER-main\\BLE-WIFI-JAMMER-main\\mouse_jammer"
+  "sketchLocation": "C:\\Users\\abhin\\Documents\\BLE-WIFI-JAMMER-master\\BLE-WIFI-JAMMER-master\\mouse_jammer"
 }
