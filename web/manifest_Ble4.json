@@ -1,0 +1,32 @@
+{
+    "name": "Ble4",
+    "builds": [
+        {
+            "chipFamily": "ESP32",
+            "improv": false,
+            "parts": [
+                {
+                    "path": "dual_wifi.ino.bootloader.bin",
+                    "offset": 4096
+                },
+                {
+                    "path": "dual_wifi.ino.partitions.bin",
+                    "offset": 32768
+                },
+                {
+                    "path": "dual_wifi.ino.bin",
+                    "offset": 65536
+                }
+            ]
+        },
+        {
+            "chipFamily": "ESP8266",
+            "parts": [
+                {
+                    "path": "esp8266.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ]
+}

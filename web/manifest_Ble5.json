@@ -1,0 +1,20 @@
+{
+  "name": "Ble5",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "improv": false,
+      "parts": [
+        { "path": "mouse_jammer.ino.bootloader.bin", "offset": 4096 },
+        { "path": "mouse_jammer.ino.partitions.bin", "offset": 32768 },
+        { "path": "mouse_jammer.ino.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP8266",
+      "parts": [
+        { "path": "esp8266.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
