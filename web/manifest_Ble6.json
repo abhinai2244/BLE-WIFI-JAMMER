@@ -1,0 +1,23 @@
+{
+    "name": "Ble6",
+    "builds": [
+        {
+            "chipFamily": "ESP32",
+            "improv": false,
+            "parts": [
+                {
+                    "path": "five_ghz_jammer.ino.bootloader.bin",
+                    "offset": 4096
+                },
+                {
+                    "path": "five_ghz_jammer.ino.partitions.bin",
+                    "offset": 32768
+                },
+                {
+                    "path": "five_ghz_jammer.ino.bin",
+                    "offset": 65536
+                }
+            ]
+        }
+    ]
+}
