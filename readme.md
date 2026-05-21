@@ -21,6 +21,12 @@ This is the most advanced version, designed to operate **two separate NRF24L01 m
     *   **Mode One (`one()`):** Both radios jump to random channels. A small microsecond delay is added to spread the interference timing.
     *   **Mode Two (`two()`):** A complex hopping mechanism where the VSPI radio hops by steps of 4 channels, and the HSPI radio hops by steps of 2 channels. They both scan up and down the spectrum independently but simultaneously.
 
+## Hardware Setup & Connections
+
+Here is the connection diagram for wiring the ESP32 and NRF24L01 modules:
+
+![Hardware Setup & Connections](SETUP%20AND%20CONNECTIONS.png)
+
 ## Dependencies
 All scripts require the following libraries:
 - `RF24` by TMRh20
